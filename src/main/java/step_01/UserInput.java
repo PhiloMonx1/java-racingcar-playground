@@ -1,23 +1,27 @@
 package step_01;
 
 public class UserInput {
-	public final String input;
+	private final String value;
 
-	public UserInput(String input) {
-		this.input = validateAndProcessInput(input);
+	public UserInput(String value) {
+		this.value = validateAndProcessInput(value);
 	}
 
-	private String validateAndProcessInput(String input) {
-		if (input == null || input.isEmpty()) {
+	public String getValue() {
+		return value;
+	}
+
+	private String validateAndProcessInput(String value) {
+		if (value == null || value.isEmpty()) {
 			return "0";
 		}
-		return checkContainsNegative(input);
+		return checkContainsNegative(value);
 	}
 
-	private String checkContainsNegative(String input) {
-		if (input.contains("-")) {
+	private String checkContainsNegative(String value) {
+		if (value.contains("-")) {
 			throw new RuntimeException("음수는 입력할 수 없습니다.");
 		}
-		return input;
+		return value;
 	}
 }

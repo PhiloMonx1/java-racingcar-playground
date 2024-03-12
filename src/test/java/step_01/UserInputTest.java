@@ -20,11 +20,11 @@ public class UserInputTest {
 	void userInputTestPass_NullOrEmpty() {
 		String inputEmpty = "";
 		UserInput userInputEmpty = new UserInput(inputEmpty);
-		assertThat(userInputEmpty.input).isEqualTo("0");
+		assertThat(userInputEmpty.getValue()).isEqualTo("0");
 
 		String inputNull = null;
 		UserInput userInputNull = new UserInput(inputNull);
-		assertThat(userInputNull.input).isEqualTo("0");
+		assertThat(userInputNull.getValue()).isEqualTo("0");
 	}
 
 	@Test
@@ -32,6 +32,6 @@ public class UserInputTest {
 	void userInputTest() {
 		String input = "//;\\n1;2;3";
 		UserInput userInput = new UserInput(input);
-		assertThat(userInput.input).isEqualTo("//;\\n1;2;3");
+		assertThat(userInput.getValue()).isEqualTo("//;\\n1;2;3");
 	}
 }
