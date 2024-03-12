@@ -36,9 +36,9 @@ public class UserNumbersTest {
 		assertThat(userNumbers.getNumbers()).isEqualTo(new int[] {1, 2, 3});
 	}
 	@Test
-	@DisplayName("UserOperand 생성자 테스트 : //;\\n1;2;3")
+	@DisplayName("UserOperand 생성자 테스트 : //;\n1;2;3")
 	void operandTestCustomSeparator() {
-		UserInput userInput = new UserInput("//;\\n1;2;3");
+		UserInput userInput = new UserInput("//;\n1;2;3");
 		UserOperand userNumbers = new UserOperand(userInput);
 
 		assertThat(userNumbers.getSeparator()).isEqualTo(";");
@@ -46,9 +46,9 @@ public class UserNumbersTest {
 	}
 
 	@Test
-	@DisplayName("UserOperand 생성자 테스트 : //;\\n1,2:3;4")
+	@DisplayName("UserOperand 생성자 테스트 : //;\n1,2:3;4")
 	void operandTestCustomSeparatorWithCommaAndColonSeparator() {
-		UserInput userInput = new UserInput("//;\\n1,2:3;4");
+		UserInput userInput = new UserInput("//;\n1,2:3;4");
 		UserOperand userNumbers = new UserOperand(userInput);
 
 		assertThat(userNumbers.getSeparator()).isEqualTo(";");

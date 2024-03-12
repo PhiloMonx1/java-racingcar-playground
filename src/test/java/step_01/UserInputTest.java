@@ -30,8 +30,8 @@ public class UserInputTest {
 	@Test
 	@DisplayName("userInput 생성자 테스트")
 	void userInputTest() {
-		String input = "//;\\n1;2;3";
+		String input = "//;\n1;2;3";
 		UserInput userInput = new UserInput(input);
-		assertThat(userInput.getValue()).isEqualTo("//;\\n1;2;3");
+		assertThat(userInput.getValue()).isEqualTo("//;\n1;2;3");
 	}
 }

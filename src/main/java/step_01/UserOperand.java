@@ -20,7 +20,7 @@ public class UserOperand {
 
 	private String extractSeparator(String input) {
 		int delimiterStartIndex = input.indexOf("//") + 2;
-		int delimiterEndIndex = input.indexOf("\\n");
+		int delimiterEndIndex = input.indexOf("\n");
 		if(delimiterEndIndex > -1){
 			return input.substring(delimiterStartIndex, delimiterEndIndex);
 		}
