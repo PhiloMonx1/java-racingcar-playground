@@ -21,8 +21,12 @@ public class UserOperand {
 	private String extractSeparator(String input) {
 		int delimiterStartIndex = input.indexOf("//") + 2;
 		int delimiterEndIndex = input.indexOf("\n");
+		int delimiterEndIndexAnother = input.indexOf("\\n");
 		if(delimiterEndIndex > -1){
 			return input.substring(delimiterStartIndex, delimiterEndIndex);
+		}
+		if(delimiterEndIndexAnother > -1){
+			return input.substring(delimiterStartIndex, delimiterEndIndexAnother);
 		}
 		return ",";
 	}
