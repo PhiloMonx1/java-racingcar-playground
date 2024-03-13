@@ -58,6 +58,31 @@ public class CarRacingTest {
 				}).withMessageMatching("목적지는 1이상 설정해야 합니다.");
 	}
 
-	//TODO: 자동차 경주 단위테스트 추가 (TDD fail)
+	@Test
+	@DisplayName("racing 테스트 : 모든 car의 point가 설정한 goal을 초과하지 않는지 & 우승자가 존재하는지")
+	void racingTest() {
+		CarRacing carRacing = new CarRacing("red,blue,green", 5);
 
+		for (int i = 0; i < carRacing.getCars().size(); i++) {
+			assertThat(carRacing.getCars().get(i).getPoint() < 6).isTrue();
+		}
+
+		assertThat(carRacing.racing().length > 0).isTrue();
+	}
+
+	@Test
+	@DisplayName("racing 테스트 : 100000번의 경주 동안 2명 이상의 우승자가 한 번이라도 존재할 수 있는지")
+	void racingTestMultipleChampion() {
+		CarRacing carRacing = new CarRacing("red,blue,green,black,white,pink,gray", 5);
+
+		boolean result = false;
+		for (int i = 0; i < 100000; i++) {
+			if(carRacing.racing().length > 1) {
+				result = true;
+				break;
+			};
+		}
+
+		assertThat(result).isTrue();
+	}
 }
