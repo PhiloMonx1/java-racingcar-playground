@@ -39,6 +39,7 @@ public class CarRacing {
 	public String[] racing() {
 		while (!isFinished()) {
 			start();
+			MessageView.printCarsCurrentPoint(getCarsCurrentPoint());
 		}
 		return getChampionNames();
 	}

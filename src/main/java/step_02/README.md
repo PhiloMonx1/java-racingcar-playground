@@ -59,7 +59,7 @@ pobi, honux가 최종 우승했습니다.
   - [X] CarRacing 클래스는 while 문으로 1개 이상의 Car의 point 값이 goal 이상일 때까지 Car의 go()를 실행한다.
   - [X] CarRacing 클래스는 Car들의 point 값을 리턴하는 함수를 가진다.
   - [X] CarRacing 클래스는 point값이 goal 이상인 Car의 name을 Sting[]로 리턴하는 함수를 가진다.
-- [ ] resultView 클래스가 필요하다. 
-  - [ ] resultView 클래스는 CarRacing가 제공한 point를 화면에 노출시키는 함수를 가진다.
-  - [ ] resultView 클래스는 게임 시작 메시지 "경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분)."를 노출하는 함수를 가진다.
-  - [ ] resultView 클래스는 CarRacing가 제공한 point값이 goal 이상인 Car의 names를 가지고 최종 우승자를 노출하는 함수를 가진다.
+- [X] resultView 클래스가 필요하다. 
+  - [X] resultView 클래스는 CarRacing가 제공한 point를 화면에 노출시키는 함수를 가진다.
+  - [X] resultView 클래스는 게임 시작 메시지 "경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분)."를 노출하는 함수를 가진다.
+  - [X] resultView 클래스는 CarRacing가 제공한 point값이 goal 이상인 Car의 names를 가지고 최종 우승자를 노출하는 함수를 가진다.
