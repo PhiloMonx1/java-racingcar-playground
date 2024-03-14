@@ -11,6 +11,10 @@ public class CarName {
 		this.name = name;
 	}
 
+	public String toString() {
+		return name;
+	}
+
 	private void validateCarName(String carName) {
 		if (carName == null || carName.isEmpty() || carName.length() > 5) {
 			throw new IllegalArgumentException("CarName의 길이는 1~5 이여야 합니다..");

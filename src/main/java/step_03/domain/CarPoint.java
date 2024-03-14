@@ -11,6 +11,10 @@ public class CarPoint {
 		this.point = point;
 	}
 
+	public int getPoint() {
+		return point;
+	}
+
 	public CarPoint move() {
 		return new CarPoint(point + 1);
 	}

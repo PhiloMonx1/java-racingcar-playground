@@ -75,7 +75,7 @@ pobi, honux가 최종 우승했습니다.
 
 ## 구현 설계
 1. Domain (Model)
-2. View
+2. ~~View~~
 3. Application (Controller)
 
 ---
@@ -108,5 +108,71 @@ pobi, honux가 최종 우승했습니다.
 
 > 1. 모든 인스턴스 변수는 원시 값이 아닌 포장된 래퍼 클래스를 사용한다.
 > 2. `Car` 클래스의 모든 메서드는 단위 테스트가 가능해야 하며, point 값이 변경되는 로직은 Ramdom에 의존해선 안된다.
+
+---
+
+-[X] `GameMessageView` view 클래스 구현
+
+> 1. MessageView 클래스를 상속한다.
+> 2. MessageView 클래스가 가진 protected 메서드를 Override 한다
+> 3. Override 한 메서드 내부에선 `Car` 객체를 사용해서 부모의 메서드를 사용한다.
+
+```java
+package step_03.view;
+
+import java.util.List;
+import step_03.domain.Car;
+
+public class GameMessageView extends MessageView {
+
+  @Override
+  public void printWinners(List<Car> winnersName) {
+    // winnersName의 Car 객체의 CarPoint 객체의 인스턴스 변수 값을 String[] 만들어 전달해야 한다.
+    super.printWinners();
+  }
+
+  @Override
+  public void printCurrentPointOfCar(Car car) {
+    // Car 객체의 CarName의 인스턴스 변수 값과 CarPoint인스턴스 변수 값를 각각 전달해야 한다.
+    super.printCurrentPointOfCar();
+  }
+}
+```
+
+> 구현 중 문제가 생겼다. getter를 사용하지 않고 주석에 적힌 요구사항을 어떻게 구현할 수 있을까? Car 객체를 통해 래퍼 클래스들의 인스턴스를 새로 만들어서 전달할 수
+> 있을까? 
+
+```java
+package step_03.view;
+
+import java.util.List;
+import step_03.domain.Car;
+
+public class GameMessageView extends MessageView {
+
+	public void printWinners(List<Car> winnersName) {
+		String[] winners = new String[winnersName.size()];
+		for (int i = 0; i < winnersName.size(); i++) {
+			winners[i] = extractCarName(winnersName.get(i));
+		}
+		super.printWinners(winners);
+	}
+
+	public void printCurrentPointOfCar(Car car) {
+		super.printCurrentPointOfCar(extractCarName(car), extractCarPoint(car));
+	}
+
+	private String extractCarName(Car car) {
+		return car.getCarName().toString();
+    }
+
+  private int extractCarPoint(Car car) {
+    return car.getCarPoint().getPoint();
+  }
+}
+```
+
+> 결국 `GameMessageView` 를 구현하기 위해서 `Car` 와 래퍼 클래스에 getter 메서드를 만들 수 밖에 없었다.
+> 다른 방법의 가능성을 찾아보았으나, 찾지 못했다.
 
 ---

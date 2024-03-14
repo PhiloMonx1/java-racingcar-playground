@@ -16,6 +16,14 @@ public class Car {
 		this.carPoint = carPoint;
 	}
 
+	public CarName getCarName() {
+		return new CarName(carName.toString());
+	}
+
+	public CarPoint getCarPoint() {
+		return new CarPoint(carPoint.getPoint());
+	}
+
 	public Car move(boolean isMove) {
 		if (isMove) {
 			return new Car(carName, carPoint.move());

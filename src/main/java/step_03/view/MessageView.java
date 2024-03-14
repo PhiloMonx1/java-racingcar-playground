@@ -11,7 +11,7 @@ public class MessageView {
 	}
 
 	protected void printWinners(String[] winnersName) {
-		System.out.println(String.join(" ,", winnersName) + GameMessage.GAME_RESULT);
+		System.out.println(String.join(", ", winnersName) + GameMessage.GAME_RESULT);
 	}
 
 	protected void printCurrentPointOfCar(String carName, int currentPoint) {
