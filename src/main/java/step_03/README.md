@@ -72,3 +72,28 @@ pobi, honux가 최종 우승했습니다.
 - [ ] 3개 이상의 인스턴스 변수를 가진 클래스를 쓰지 않았는가
 - [ ] 모든 메서드의 단위 테스트가 존재하는가
 - [ ] MVC 패턴에 맞게 클래스가 단일 원칙을 지키고 있는가
+
+## 구현 설계
+1. Domain (Model)
+2. View
+3. Application (Controller)
+
+> 2번 View 부터 TDD로 구현
+> 1. `MessageView` 클래스가 필요하다
+> 2. `MessageView` 클래스는 게임과 무관하게 Message를 print 하는 로직만을 가진다. public 하고 static 한 메서드만을 가진다.
+> 3. `MessageView` 클래스의 메서드는 어느 것에도 의존되지 않고, 어느 것도 의존하지 않는다. print 메서드는 노출 해야 하는 print 값을 파라미터로 받는다.
+> - [X] printGameMessage(GameMessage message) : sout(message)를 한다.
+> - [X] printWinners(String[] winnersName) : for (String winnerName : winnersName) winnerName을 ","를 구분하여 묶은 후 우승메시지와 함께 sout한다.
+> - [X] printCurrentPointOfCar(String carName, int currentPoint) : sout(carName : repeatedSymbol("-", currentPoint))한다.
+> - ~~[ ] printWinners(List<Car> winners) : winners 에서 Car 객체를 하나씩 뽑아 ","로 묶은 후 "가 최종 우승했습니다." 와 결합해서 sout한다~~
+> - ~~[ ] printCurrentPointOfCar(Car car) sout(car.name : repeatedSymbol(-, car.point)) 한다.~~
+> 4. 게임 관련 메시지를 관리하는 `GameMessage` Enum이 필요하다.
+
+> `MessageView` 클래스의 메서드로 구현하려 했으나 단일 책임 원칙을 지키기 위해 분리한 메서드
+> 
+> [StringUtil.java](utils%2FStringUtil.java) 클래스로 분리하였다.
+> - [X] repeatedSymbol(String symblo, int count) : count 만큼 symblo을 반복해서 String으로 만든 후 리턴한다.
+
+> 구현을 하다보니 printWinners(), printCurrentPointOfCar()의 경우 Car 객체가 없는 경우 파라미터를 구현하기 까다롭다는 사실을 알게되었다. 
+> 
+> 내가 선택한 방법은 `Car`를 만든 이후 `MessageView` 클래스를 상속하는 `GameMessageView` 클래스를 만드는 것이다. `MessageView`에선 Car 객체 대신 자바 기본 타입을 가지고 로직을 수행하는 메서드를 구현하고, `GameMessageView` 에선 메서드를 오버라이드 해서 Car 객체를 파라미터로 로직을 수행하도록 구현하고자 한다.
