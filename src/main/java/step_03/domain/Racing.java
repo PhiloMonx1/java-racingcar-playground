@@ -2,6 +2,7 @@ package step_03.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Racing {
 
@@ -16,13 +17,8 @@ public class Racing {
 	}
 
 	public List<Car> getWinners(RacingCars playCars, int goal) {
-		List<Car> winners = new ArrayList<>();
-
-		for (Car car : playCars.getRacingCars()) {
-			if (car.getCarPoint().getPoint() >= goal) {
-				winners.add(car);
-			}
-		}
-		return winners;
+		return playCars.getRacingCars().stream()
+				.filter(car -> car.getCarPoint().getPoint() >= goal)
+				.collect(Collectors.toList());
 	}
 }
