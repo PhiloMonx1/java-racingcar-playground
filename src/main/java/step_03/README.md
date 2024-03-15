@@ -176,3 +176,119 @@ public class GameMessageView extends MessageView {
 > 다른 방법의 가능성을 찾아보았으나, 찾지 못했다.
 
 ---
+
+-[X] `Racing` Domain 클래스 구현
+
+<details>
+  <summary>시행 착오</summary>
+
+> 1. ~~인스턴스 변수는 오직 하나이며 `List<Car> cars` 를 가진다.~~
+> 2. ~~cars 인스턴스 변수는 일급컬렉션으로 랩핑한다.~~
+> 3. ~~playRacing(int goal) 메서드를 가진다.~~
+
+```java
+package step_03.domain;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class RacingGame {
+
+  private final RacingCars cars;
+
+  public RacingGame(RacingCars racingCars) {
+    this.cars = racingCars;
+  }
+
+  public RacingCars playGame(int goal) {
+    List<Car> playCars = cars.getRacingCars();
+    List<Car> winners = new ArrayList<>();
+
+    while (winners.isEmpty()) {
+      winners = getWinners(playCars, goal);
+      playCars = getWinners(playCars, goal);
+    }
+    return new RacingCars(winners);
+  }
+
+  private List<Car> getWinners(List<Car> playCars, int goal) {
+    List<Car> winners = new ArrayList<>();
+
+    for (Car car : playCars) {
+      if (car.getCarPoint().getPoint() >= goal) {
+        winners.add(car);
+        continue;
+      }
+      boolean isMove = getRandomMoveChance();
+      car.move(isMove);
+    }
+    return winners;
+  }
+
+  private boolean getRandomMoveChance() {
+    Random random = new Random();
+    return random.nextInt(10) < 4;
+  }
+}
+```
+
+> 이 상황에서의 playGame()을 보자. 해당 메서드에는 2가지 문제점이 있다.
+>
+> 1. while 문이 끝나지 않는다.
+> 2. 레이싱 중인 Car 들의 진행 상태를 노출하기 위해선 내부에서 printCurrentPointOfCar()를 사용해야 한다.
+>
+> 여기서 1번 문제점을 좀 더 살펴보자.
+>
+> while 문이 끝나지 않는 이유는 getWinners() 내부에서 move() 를 통해 변경된 Car 객체들이 새로 반환 될 때 반영되지 않기 때문이다.
+> getWinners() 는 goal에 도달한 객체만을 담아서 반환하기 때문, 이 외에도
+>
+> 1. getWinners() 메서드가 RacingCars 일급 컬렉션을 반환하지 않는 문제
+> 2. getWinners() 메서드가 내부에서 랜덤을 직접 사용하고 있어 테스트가 어려운 문제
+>
+> 등 `RacingGame`을 구현하고 나니 Application 과 View 를 구현하는데 문제가 생기고 있었다.
+
+> 그래서 내가 선택한 방법은 `RacingGame` 클래스의 책임을 줄이는 것이었다.
+
+```java
+package step_03.domain;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Racing {
+
+  public RacingCars moveCars(RacingCars playCars, boolean[] isMoves) {
+    List<Car> movedCars = new ArrayList<>();
+    int count = 0;
+    for (Car car : playCars.getRacingCars()) {
+      movedCars.add(car.move(isMoves[count]));
+      count++;
+    }
+    return new RacingCars(movedCars);
+  }
+
+  public List<Car> getWinners(RacingCars playCars, int goal) {
+    List<Car> winners = new ArrayList<>();
+
+    for (Car car : playCars.getRacingCars()) {
+      if (car.getCarPoint().getPoint() >= goal) {
+        winners.add(car);
+      }
+    }
+    return winners;
+  }
+}
+```
+
+</details>
+
+> Todo List를 먼저 작성하고 구현하는 것이 원칙이나, 구현 중 시행 착오를 거치게 되면서 라이브 코딩으로 기능 구현을 마친 후 구현에 대해 적게 되었다.
+>
+> `Racing` 클래스는 view, random 등에 의존하지 않도록 작성되었다.
+>
+> moveCars() 메서드는 파라미터로 RacingCars를 받아서 내부의 Car 객체들의 point를 증가시키는 즉, Cars 의 이동을 담당하게 된다. 이 때, 전달한
+> Car의 갯수와 동일한 길이의 boolean[] 를 인자로 전달하여, 각 Car가 이동을 할지 하지 않을지 정할 수 있도록 했다.
+>
+> getWinners() 메서드는 RacingCars 와 int goal 을 파라미터로 받아 RacingCars 내부의 Car 중에서 point 값을 goal과 비교한다. 만약
+> 크거나 같을 경우 해당하는 Car 를 List에 담아서 리턴한다.
