@@ -39,7 +39,7 @@ public class RacingGameApplication {
 					RandomUtil.getRandomBooleans(playCars.getRacingCars().size()));
 			gameView.printCurrentPointOfCars(playCars);
 			System.out.print("\n");
-			winners = racing.getWinners(playCars, goalPoint);
+			winners = racing.getWinners(playCars, goalPoint).getRacingCars();
 		}
 		gameView.printWinners(new RacingCars(winners));
 	}

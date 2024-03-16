@@ -39,7 +39,7 @@ class RacingTest {
 				Arrays.asList(new Car(new CarName("green"), new CarPoint(10)),
 						new Car(new CarName("blue"), new CarPoint(10))));
 
-		RacingCars winners = new RacingCars(game.getWinners(racingCars, 10));
+		RacingCars winners = game.getWinners(racingCars, 10);
 
 		assertThat(winners).isEqualTo(winner);
 	}

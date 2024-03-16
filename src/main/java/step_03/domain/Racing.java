@@ -16,9 +16,9 @@ public class Racing {
 		return new RacingCars(movedCars);
 	}
 
-	public List<Car> getWinners(RacingCars playCars, int goal) {
-		return playCars.getRacingCars().stream()
+	public RacingCars getWinners(RacingCars playCars, int goal) {
+		return new RacingCars(playCars.getRacingCars().stream()
 				.filter(car -> car.getCarPoint().getPoint() >= goal)
-				.collect(Collectors.toList());
+				.collect(Collectors.toList()));
 	}
 }
